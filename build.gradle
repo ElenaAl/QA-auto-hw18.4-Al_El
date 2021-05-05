@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+
+    implementation 'org.projectlombok:lombok:1.18.8'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    implementation group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+    implementation 'org.hibernate:hibernate-core:5.2.6.Final'
+
+    //database
+    implementation 'com.h2database:h2:1.4.194'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+}
+
+test {
+    useJUnitPlatform()
+}
