@@ -2,29 +2,25 @@ package ru.fintech.qa.homework.utils.db;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
-import ru.fintech.qa.homework.utils.tables.Animal;
 
 import java.math.BigInteger;
 
 public class DBHibernateService {
 
-    public final Animal getUserByName(final String name) {
-        SessionFactory sessionFactory = DBClient.getSessionFactory();
 
-        Session session = sessionFactory.openSession();
-
-        return session.createNativeQuery("select * from animal where \"name\" = '" + name + "'",
-                Animal.class).getResultList().get(0);
-
-    }
     public final BigInteger count(final String name) {
 
+
         SessionFactory sessionFactory = DBClient.getSessionFactory();
 
         Session session = sessionFactory.openSession();
 
-        return (BigInteger) session.createNativeQuery("select count (*) from " + name).uniqueResult();
+        BigInteger result = (BigInteger) session.createNativeQuery("select count (*) from " + name).uniqueResult();
+        session.close();
+
+        return result;
 
     }
 
@@ -34,8 +30,12 @@ public class DBHibernateService {
 
         Session session = sessionFactory.openSession();
 
-        return (BigInteger) session.createNativeQuery("select count (\""
+        BigInteger result = (BigInteger) session.createNativeQuery("select count (\""
                 + field + "\") from " + table + " where \"name\" in (" + names + ")").uniqueResult();
+
+        session.close();
+
+        return result;
     }
 
     public final void insertAnimal(
@@ -56,6 +56,21 @@ public class DBHibernateService {
         query.executeUpdate();
         session.getTransaction().commit();
 
+        session.close();
+
+    }
+
+    public final void validationID() {
+        int count = 1;
+
+        while (count <= 10) {
+            try {
+                insertAnimal(count, "Лисенок", 2, "1", 1, 1);
+            } catch (ConstraintViolationException e) {
+                e.printStackTrace();
+            }
+            count++;
+        }
     }
 
     public final void insertWorkman(final int id, final String nameWorkman, final int age, final String position) {
@@ -71,7 +86,9 @@ public class DBHibernateService {
 
         query.executeUpdate();
         session.getTransaction().commit();
+        session.close();
     }
+
 
     public final void insertPlaces(final int id, final String row, final int placeNum, final String namePlace) {
         SessionFactory sessionFactory = DBClient.getSessionFactory();
@@ -83,5 +100,6 @@ public class DBHibernateService {
 
         query.executeUpdate();
         session.getTransaction().commit();
+        session.close();
     }
 }

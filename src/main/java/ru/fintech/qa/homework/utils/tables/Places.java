@@ -12,7 +12,7 @@ public class Places {
     @Id
     private int id;
     @Column(name = "row")
-    private int row;;
+    private int row;
     @Column(name = "place_num")
     private int placeNum;
     @Column(name = "name")

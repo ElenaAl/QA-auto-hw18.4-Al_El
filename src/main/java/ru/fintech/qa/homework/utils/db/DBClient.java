@@ -11,6 +11,7 @@ import ru.fintech.qa.homework.utils.tables.Zoo;
 public class DBClient {
 
     private static SessionFactory sessionFactory = null;
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             sessionFactory = buildSessionFactory();

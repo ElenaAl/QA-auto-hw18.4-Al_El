@@ -8,18 +8,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "animal")
 public class Animal {
-        @Id
-        private int id;
-        @Column(name = "name")
-        private String name;
-        @Column(name = "age")
-        private int age;
-        @Column(name = "type")
-        private int type;
-        @Column(name = "sex")
-        private int sex;
-        @Column(name = "place")
-        private int place;
+    @Id
+    private int id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "age")
+    private int age;
+    @Column(name = "type")
+    private int type;
+    @Column(name = "sex")
+    private int sex;
+    @Column(name = "place")
+    private int place;
 
     public final int getId() {
         return id;
@@ -62,5 +62,5 @@ public class Animal {
     }
 
 
-    }
+}
 
